@@ -48,7 +48,7 @@ public class BeanUtils {
                     if (getter.getName().substring(3).equals(s)) {
                         Class<?>[] classes = setter.getParameterTypes();
                         Class getterClass = getter.getReturnType();
-                        if (checkClass(getterClass, classes[0])) {
+                        if (getterClass.isAssignableFrom(classes[0])) {
                             Object o = getter.invoke(from);
                             setter.invoke(to, getter.invoke(from));
                         }
@@ -56,15 +56,5 @@ public class BeanUtils {
                 }
             }
         }
-    }
-
-    private static boolean checkClass(Class getterClass, Class setterClass) {
-        if (getterClass.equals(setterClass)) return true;
-        while (!getterClass.getSuperclass().equals(Object.class)) {
-            getterClass = getterClass.getSuperclass();
-            if (getterClass.equals(setterClass)) return true;
-        }
-        return false;
-
     }
 }

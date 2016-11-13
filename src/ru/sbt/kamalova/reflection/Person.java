@@ -7,6 +7,7 @@ public class Person {
     private String firstName;
     private String secondName;
     private int age;
+    private boolean isMarried;
 
     public Person() {
     }
@@ -17,8 +18,6 @@ public class Person {
         this.age = age;
         this.isMarried = isMarried;
     }
-
-    private boolean isMarried;
 
 
     private boolean isMarried() {
