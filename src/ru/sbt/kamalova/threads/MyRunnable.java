@@ -15,7 +15,7 @@ public class MyRunnable implements Runnable {
         long start = System.currentTimeMillis();
         while (System.currentTimeMillis() - start < 10 * id) {
             long n = 1;
-            for (int i = 1; i < id; i++) {
+            for (int i = 1; i < id * 2; i++) {
                 n = n * i;
             }
         }

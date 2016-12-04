@@ -36,14 +36,13 @@ public class Main {
         System.out.println("Interrupted: " + context.getInterruptedTaskCount());
         System.out.println("Finished: " + context.isFinished());
         /*
-        Output example:
-        Completed: 3
-        Finish
+        Completed: 2
         Completed: 4
         Completed: 5
         Failed: 1
         Interrupted: 4
         Finished: false
+        Finish
          */
     }
 }

@@ -11,7 +11,8 @@ public class ExecutionManagerImpl implements ExecutionManager {
     @Override
     public Context execute(Runnable callback, Runnable... tasks) {
         ExecutorService service = Executors.newCachedThreadPool();
-        List<Future> futures = new ArrayList<>();
+        final List<Future> futures = new ArrayList<>();
+        final Runnable cb = callback;
 
         for (Runnable runnable : tasks) {
             Future<?> future = service.submit(runnable);
@@ -19,11 +20,21 @@ public class ExecutionManagerImpl implements ExecutionManager {
         }
         Context context = new ContextImpl(futures);
 
-
-        Thread thread = new Thread(callback);
-        thread.start();
-
         service.shutdown();
+
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        es.execute(new Runnable() {
+            @Override
+            public void run() {
+                for (Future<?> future : futures) {
+                    while (!future.isDone()) {
+                        // No operation
+                    }
+                }
+                cb.run();
+            }
+        });
+        es.shutdown();
         return context;
     }
 }
